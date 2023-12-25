@@ -3,7 +3,8 @@ import React from 'react'
 import classes from './index.module.scss'
 import { useFilter } from '../../../_providers/Filter'
 import { Category } from '../../../../payload/payload-types'
-
+import { Checkbox } from '../../../_components/Checkbox'
+import { HR } from '../../../_components/HR'
 
 const Filters = ({ categories }: { categories: Category[] }) => {
   const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
@@ -23,7 +24,7 @@ const Filters = ({ categories }: { categories: Category[] }) => {
       <h6 className={classes.title}>Product Categories</h6>
       <div className={classes.categories}>
         {categories.map(category => {
-          const isSelected = false
+          const isSelected = categoryFilters.includes(category.id)
           return (
             <Checkbox
               key={category.id}
@@ -34,6 +35,11 @@ const Filters = ({ categories }: { categories: Category[] }) => {
             ></Checkbox>
           )
         })}
+      </div>
+      <HR className={classes.hr}></HR>
+      <h6 className={classes.title}>Sort By</h6>
+      <div className={classes.categories}>
+        
       </div>
     </div>
   )
