@@ -1,11 +1,42 @@
-import React from 'react';
+'use client'
+import React from 'react'
+import classes from './index.module.scss'
+import { useFilter } from '../../../_providers/Filter'
+import { Category } from '../../../../payload/payload-types'
 
-const Filters = () => {
+
+const Filters = ({ categories }: { categories: Category[] }) => {
+  const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
+
+  const handleCategories = (categoryId: string) => {
+    if (categoryFilters.includes(categoryId)) {
+      const updatedCategories = categoryFilters.filter(id => id !== categoryId)
+
+      setCategoryFilters(updatedCategories)
+    } else {
+      setCategoryFilters([...categoryFilters, categoryId])
+    }
+  }
+
   return (
-    <div>
-      filters
+    <div className={classes.filters}>
+      <h6 className={classes.title}>Product Categories</h6>
+      <div className={classes.categories}>
+        {categories.map(category => {
+          const isSelected = false
+          return (
+            <Checkbox
+              key={category.id}
+              label={category.title}
+              value={category.id}
+              isSelected={isSelected}
+              onClickHandler={handleCategories}
+            ></Checkbox>
+          )
+        })}
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Filters;
+export default Filters
